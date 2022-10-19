@@ -11,6 +11,7 @@ string guessNumOne;
 string guessNumTwo;
 int num1 = 0;
 int num2 = 0;
+bool ownLoop = true;
 
 while(endGame==true)
 {
@@ -138,13 +139,20 @@ else if(difficult == "own")
     Console.WriteLine("Give me a second number that is greater than the first number.");
     guessNumTwo = Console.ReadLine();
     bool trueG2 = Int32.TryParse(guessNumTwo, out num2);
+
     if(trueG == false && trueG2==false)
     {
         Console.WriteLine("");
         Console.WriteLine("Play the game right next time!");
         break;
     }
-
+    if(num2<num1)
+    {
+        Console.WriteLine("I said a number GREATER THAN the first number NOT less than!");
+        ownLoop=false;
+    }
+    if(ownLoop==true)
+    {
     int rndNum2 = rndNum.Next(num1,num2);
     Console.WriteLine($"Now guess a number between {num1} and {num2}.");
     while(num != rndNum2)
@@ -171,10 +179,11 @@ else if(difficult == "own")
         Console.WriteLine("It took you " + ownNumberGuesses + " guesses to get it right!");
     }
     }
+    }
 }
 Console.WriteLine();
 Console.WriteLine("Would you like to play again?");
-Console.WriteLine("Type yes to play again. Type end to stop playing");
+Console.WriteLine("Type anything to play again. Type end to stop playing");
 string stopGame = Console.ReadLine().ToLower();
 if(stopGame == "end")
 {
